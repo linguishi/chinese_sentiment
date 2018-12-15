@@ -4,3 +4,5 @@
 sgns.zhihu.bigram
 neg/
 pos/
+fix_pos/
+fix_neg/
