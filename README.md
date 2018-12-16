@@ -9,14 +9,14 @@ python FixCorpus.py
 ```
 将原本`gb2312`编码文件转换成`utf-8`编码的文件。
 
-语料的具体测试参考 `CorpusTests.py`
+语料的具体测试参考 [`CorpusTests.py`](https://github.com/linguishi/lstm-sentiment/blob/master/CorpusTests.ipynb)
 
 #### 词向量
 本实验使用开源词向量[*chinese-word-vectors*](https://github.com/Embedding/Chinese-Word-Vectors)
 
 选择知乎语料训练而成的Word Vector，[点击下载](https://pan.baidu.com/s/1OQ6fQLCgqT43WTwh5fh_lg)
 
-词向量的相关测试，可参考 `CNWordVecTest.ipynb`
+词向量的相关测试，可参考 [`CNWordVecTest.ipynb`](https://github.com/linguishi/lstm-sentiment/blob/master/CNWordVecTest.ipynb)
 
 #### 建模、训练、测试
 `main.py` 或者 `Main.ipynb`
