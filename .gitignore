@@ -6,3 +6,5 @@ neg/
 pos/
 fix_pos/
 fix_neg/
+sentiment_checkpoint.keras
+words.txt
