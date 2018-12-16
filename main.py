@@ -88,7 +88,6 @@ model.add(Embedding(num_words,
                     weights=[ebd_matrix],
                     input_length=max_tokens,
                     trainable=False))
-model.add(Bidirectional(LSTM(units=32, return_sequences=True)))
 model.add(LSTM(units=16, return_sequences=False))
 model.add(Dense(1, activation='sigmoid'))
 optimizer = Adam(lr=1e-3)
