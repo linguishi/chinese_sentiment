@@ -19,37 +19,37 @@ python FixCorpus.py
 词向量的相关测试，可参考 [`CNWordVecTest.ipynb`](https://github.com/linguishi/lstm-sentiment/blob/master/CNWordVecTest.ipynb)
 
 #### 建模、训练、测试
-`main.py` 或者 `Main.ipynb`
+[`Main.ipynb`](https://github.com/linguishi/lstm-sentiment/blob/master/Main.ipynb)
 
 #### 一些测试结果
 ```
-Accuracy:0.857500
+Accuracy:0.880000
 
 酒店设施不是新的，服务态度很不好
-是一例负面评价 output=0.44
-
-酒店卫生条件非常不好
-是一例负面评价 output=0.26
-
-床铺非常舒适
-是一例正面评价 output=0.65
-
-房间很凉，不给开暖气
-是一例负面评价 output=0.23
-
-房间很凉爽，空调冷气很足
-是一例正面评价 output=0.50
-
-酒店环境不好，住宿体验很不好
-是一例负面评价 output=0.26
-
-房间隔音不到位
-是一例负面评价 output=0.29
-
-晚上回来发现没有打扫卫生
 是一例负面评价 output=0.33
 
+酒店卫生条件非常不好
+是一例负面评价 output=0.09
+
+床铺非常舒适
+是一例正面评价 output=0.82
+
+房间很凉，不给开暖气
+是一例负面评价 output=0.26
+
+房间很凉爽，空调冷气很足
+是一例正面评价 output=0.65
+
+酒店环境不好，住宿体验很不好
+是一例负面评价 output=0.08
+
+房间隔音不到位
+是一例负面评价 output=0.18
+
+晚上回来发现没有打扫卫生
+是一例负面评价 output=0.23
+
 因为过节所以要我临时加钱，比团购的价格贵
-是一例负面评价 output=0.17
+是一例负面评价 output=0.07
 ```
 
