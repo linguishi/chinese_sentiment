@@ -6,5 +6,7 @@ neg/
 pos/
 fix_pos/
 fix_neg/
-sentiment_checkpoint.keras
-words.txt
+old_impl/sentiment_checkpoint.keras
+old_impl/words.txt
+/**/__pycache__/
+.idea/
