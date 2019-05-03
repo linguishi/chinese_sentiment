@@ -1,7 +1,8 @@
 *.pyc
 .vscode/
 .ipynb_checkpoints/
-sgns.zhihu.bigram
+sgns.*
+*.npz
 neg/
 pos/
 fix_pos/
