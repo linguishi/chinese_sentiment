@@ -30,4 +30,4 @@ if __name__ == '__main__':
     print('- done. Found {} vectors for {} words'.format(found, size_vocab))
 
     # 保存 np.array
-    np.savez_compressed('ch2vec.npz', embeddings=embeddings)
+    np.savez_compressed('w2v.npz', embeddings=embeddings)
