@@ -157,3 +157,19 @@ if __name__ == '__main__':
     train_spec = tf.estimator.TrainSpec(input_fn=train_inpf)
     eval_spec = tf.estimator.EvalSpec(input_fn=eval_inpf, throttle_secs=10)
     tf.estimator.train_and_evaluate(estimator, train_spec, eval_spec)
+
+
+    # Write predictions to file
+    def write_predictions(name):
+        Path('results/score').mkdir(parents=True, exist_ok=True)
+        with Path('results/score/{}.preds.txt'.format(name)).open('wb') as f:
+            test_inpf = functools.partial(input_fn, fwords(name), ftags(name))
+            golds_gen = generator_fn(fwords(name), ftags(name))
+            preds_gen = estimator.predict(test_inpf)
+            for golds, preds in zip(golds_gen, preds_gen):
+                ((words, _), tag) = golds
+                f.write(b' '.join([tag, preds['labels'], ''.join(words)]) + b'\n')
+
+
+    for name in ['train', 'eval']:
+        write_predictions(name)
