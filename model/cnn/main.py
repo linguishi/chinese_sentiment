@@ -77,14 +77,14 @@ def model_fn(features, labels, mode, params):
     pooled_outputs = []
     for i, filter_size in enumerate(params['filter_sizes']):
         conv2 = tf.layers.conv2d(embeddings_expanded, params['num_filters'], kernel_size=[filter_size, params['dim']],
-                                 activation=tf.nn.relu, kernel_initializer=tf.truncated_normal_initializer(stddev=0.1),
-                                 name='conv-{}'.format(i))
+                                 activation=tf.nn.relu, name='conv-{}'.format(i))
         pooled = tf.layers.max_pooling2d(inputs=conv2, pool_size=[params['nwords'] - filter_size + 1, 1],
                                          strides=[1, 1], name='pool-{}'.format(i))
         pooled_outputs.append(pooled)
     num_total_filters = params['num_filters'] * len(params['filter_sizes'])
     h_poll = tf.concat(pooled_outputs, 3)
     output = tf.reshape(h_poll, [-1, num_total_filters])
+    output = tf.layers.dropout(output, rate=dropout, training=training)
 
     # FC
     logits = tf.layers.dense(output, num_tags)
@@ -127,9 +127,9 @@ if __name__ == '__main__':
     params = {
         'dim': 300,
         'nwords': 300,
-        'filter_sizes': [2, 3, 4, 5],
-        'num_filters': 128,
-        'dropout': 0.5,
+        'filter_sizes': [2, 3, 4],
+        'num_filters': 64,
+        'dropout': 0.6,
         'num_oov_buckets': 1,
         'epochs': 50,
         'batch_size': 20,
@@ -157,8 +157,6 @@ if __name__ == '__main__':
     cfg = tf.estimator.RunConfig(save_checkpoints_secs=10)
     estimator = tf.estimator.Estimator(model_fn, 'results/model', cfg, params)
     Path(estimator.eval_dir()).mkdir(parents=True, exist_ok=True)
-    hook = tf.contrib.estimator.stop_if_no_increase_hook(
-        estimator, 'acc', 300, min_steps=4000, run_every_secs=10)
-    train_spec = tf.estimator.TrainSpec(input_fn=train_inpf, hooks=[hook])
+    train_spec = tf.estimator.TrainSpec(input_fn=train_inpf)
     eval_spec = tf.estimator.EvalSpec(input_fn=eval_inpf, throttle_secs=10)
     tf.estimator.train_and_evaluate(estimator, train_spec, eval_spec)

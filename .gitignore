@@ -11,3 +11,5 @@ old_impl/sentiment_checkpoint.keras
 old_impl/words.txt
 /**/__pycache__/
 .idea/
+*.log
+/**/results
