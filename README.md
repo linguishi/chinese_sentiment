@@ -103,7 +103,6 @@ weighted avg       0.89      0.89      0.89       800
 
 ![截图](https://raw.githubusercontent.com/linguishi/chinese_sentiment/master/pic/1_GRQ91HNASB7MAJPTTlVvfw.jpeg)
 
-图来源于互联网，但和这个bi-lstm不太一样的是，由于本项目中lstm的单元数随batch动态改变，所以并不是取序列中的最后一个单元的状态作为输出，而是取正向lstm序列中的句末位置的单元的输出，以及反向序列中的第一个单元的输出，两者相连接作为全连层的输入。
 
 BI-LSTM模型的训练，在`lstm`目录底下运行 
 ```

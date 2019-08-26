@@ -27,7 +27,7 @@ def parse_fn(line_words, line_tag):
 
 
 def generator_fn(words, tags):
-    with Path(words).open('r') as f_words, Path(tags).open('r') as f_tags:
+    with Path(words).open('r', encoding='utf-8') as f_words, Path(tags).open('r', encoding='utf-8') as f_tags:
         for line_words, line_tag in zip(f_words, f_tags):
             yield parse_fn(line_words, line_tag)
 
@@ -61,7 +61,7 @@ def model_fn(features, labels, mode, params):
     training = (mode == tf.estimator.ModeKeys.TRAIN)
     vocab_words = tf.contrib.lookup.index_table_from_file(
         params['words'], num_oov_buckets=params['num_oov_buckets'])
-    with Path(params['tags']).open() as f:
+    with Path(params['tags']).open(encoding='utf-8') as f:
         indices = [idx for idx, tag in enumerate(f)]
         num_tags = len(indices)
 
@@ -78,10 +78,9 @@ def model_fn(features, labels, mode, params):
     lstm_cell_fw = tf.contrib.rnn.LSTMBlockFusedCell(params['lstm_size'])
     lstm_cell_bw = tf.contrib.rnn.LSTMBlockFusedCell(params['lstm_size'])
     lstm_cell_bw = tf.contrib.rnn.TimeReversedFusedRNN(lstm_cell_bw)
-    output_fw, _ = lstm_cell_fw(t, dtype=tf.float32, sequence_length=nwords)
-    output_bw, _ = lstm_cell_bw(t, dtype=tf.float32, sequence_length=nwords)
-    fw_index = tf.concat([tf.reshape(nwords - 1, (-1, 1)), tf.reshape(tf.range(tf.size(nwords)), (-1, 1))], axis=1)
-    output = tf.concat([tf.gather_nd(output_fw, fw_index), output_bw[0]], axis=-1)
+    _, (cf, hf) = lstm_cell_fw(t, dtype=tf.float32, sequence_length=nwords)
+    _, (cb, hb) = lstm_cell_bw(t, dtype=tf.float32, sequence_length=nwords)
+    output = tf.concat([hf, hb], axis=-1)
     output = tf.layers.dropout(output, rate=dropout, training=training)
 
     # FC
@@ -136,7 +135,7 @@ if __name__ == '__main__':
         'w2v': str(Path(DATA_DIR, 'w2v.npz'))
     }
 
-    with Path('results/params.json').open('w') as f:
+    with Path('results/params.json').open('w', encoding='utf-8') as f:
         json.dump(params, f, indent=4, sort_keys=True)
 
 
@@ -151,18 +150,18 @@ if __name__ == '__main__':
     train_inpf = functools.partial(input_fn, fwords('train'), ftags('train'),
                                    params, shuffle_and_repeat=True)
     eval_inpf = functools.partial(input_fn, fwords('eval'), ftags('eval'))
-    cfg = tf.estimator.RunConfig(save_checkpoints_secs=10)
+    cfg = tf.estimator.RunConfig(save_checkpoints_secs=60)
     estimator = tf.estimator.Estimator(model_fn, 'results/model', cfg, params)
     Path(estimator.eval_dir()).mkdir(parents=True, exist_ok=True)
     train_spec = tf.estimator.TrainSpec(input_fn=train_inpf)
-    eval_spec = tf.estimator.EvalSpec(input_fn=eval_inpf, throttle_secs=10)
+    eval_spec = tf.estimator.EvalSpec(input_fn=eval_inpf, throttle_secs=60)
     tf.estimator.train_and_evaluate(estimator, train_spec, eval_spec)
 
 
     # Write predictions to file
     def write_predictions(name):
         Path('results/score').mkdir(parents=True, exist_ok=True)
-        with Path('results/score/{}.preds.txt'.format(name)).open('wb') as f:
+        with Path('results/score/{}.preds.txt'.format(name)).open('wb', encoding='utf-8') as f:
             test_inpf = functools.partial(input_fn, fwords(name), ftags(name))
             golds_gen = generator_fn(fwords(name), ftags(name))
             preds_gen = estimator.predict(test_inpf)

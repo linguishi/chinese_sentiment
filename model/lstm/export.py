@@ -19,7 +19,7 @@ def serving_input_receiver_fn():
 
 
 if __name__ == '__main__':
-    with Path(PARAMS).open() as f:
+    with Path(PARAMS).open(encoding='utf-8') as f:
         params = json.load(f)
 
     estimator = tf.estimator.Estimator(model_fn, MODEL_DIR, params=params)
