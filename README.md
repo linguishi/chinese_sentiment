@@ -136,7 +136,7 @@ weighted avg       0.89      0.89      0.89       800
 #### 模型导出
 在`lstm`目录底下运行 
 ```
-python saved_model.py
+python export.py
 ```
 导出`estimator`推断图，可以用作prediction。本项目已上传了`saved_model`，可以不通过训练直接测试。
 
