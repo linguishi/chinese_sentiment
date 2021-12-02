@@ -65,7 +65,7 @@ POS
 3. 最大池化层，每个滤波器输出仅取一个最大值
 4. 全连接
 
- ![截图](http://www.wildml.com/wp-content/uploads/2015/11/Screen-Shot-2015-11-06-at-8.03.47-AM-1024x413.png)
+ ![截图](https://raw.githubusercontent.com/linguishi/chinese_sentiment/master/pic/%E6%88%AA%E5%9B%BE_%E9%80%89%E6%8B%A9%E5%8C%BA%E5%9F%9F_20211202181126.png)
 图来源于论文 https://arxiv.org/abs/1408.5882 ，但与论文不同的是，论文中采取了一个pre-train 的embeddings和一个没有训练的embeddings组成了类似图像概念的双通道。本项目中只采用了一个预训练embeddings的单通道。
 
 CNN模型的训练，在`cnn`目录底下运行 
