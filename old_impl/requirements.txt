@@ -1,5 +1,5 @@
 gensim==3.5.0
-tensorflow==1.12.2
+tensorflow==2.6.4
 numpy==1.15.4
 jieba==0.39
 scikit_learn==0.20.2
