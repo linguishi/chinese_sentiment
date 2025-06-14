@@ -13,3 +13,37 @@ old_impl/words.txt
 .idea/
 *.log
 /**/results
+
+# Testing related
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.tox/
+.nox/
+
+# Claude settings
+.claude/*
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+wheels/
+pip-wheel-metadata/
+
+# IDE files
+*.swp
+*.swo
+*~
+.DS_Store
